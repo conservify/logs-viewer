@@ -24,9 +24,11 @@ class LogEntry extends React.Component {
             return (<span key={key} className="extra"><span className="key">{key}</span>: <span className="value">{value}</span></span>);
         });
 
+        const classes = "row entry level-" + zaplevel;
+
         return (
             <div>
-                <div className="row entry">
+                <div className={classes}>
                     <div className="col-md-1 ts"> {ts} {zaplevel} </div>
                     <div className="col-md-1 source"> {source} </div>
                     <div className="col-md-1 logger"> {logger} </div>

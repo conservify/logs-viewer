@@ -18,3 +18,11 @@
 .logs .entry .extra .key {
     font-weight: bold;
 }
+
+.logs .entry.level-warn {
+    background-color: #ffc107;
+}
+
+.logs .entry.level-error {
+    background-color: #ffdddd;
+}
