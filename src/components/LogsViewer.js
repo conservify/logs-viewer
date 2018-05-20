@@ -26,10 +26,12 @@ class LogEntry extends React.Component {
 
         const classes = "row entry level-" + zaplevel;
 
+        const taskUrl = "https://code.conservify.org/logs/search?rangetype=relative&fields=message%2Csource%2clogger%2ctask_id%2czaplevel&width=1916&highlightMessage=&relative=0&q=task_id%3A" + task_id;
+
         return (
             <div>
                 <div className={classes}>
-                    <div className="col-md-1 ts"> {ts} {zaplevel} </div>
+                    <div className="col-md-1 ts"> <a target="_blank" href={taskUrl}>{ts}</a> <span className="level">{zaplevel}</span> </div>
                     <div className="col-md-1 source"> {source} </div>
                     <div className="col-md-1 logger"> {logger} </div>
                     <div className="col-md-9 message"> {message} {extras}</div>

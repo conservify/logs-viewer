@@ -19,10 +19,14 @@
     font-weight: bold;
 }
 
-.logs .entry.level-warn {
+.logs .entry.level-warn .level {
     background-color: #ffc107;
 }
 
-.logs .entry.level-error {
-    background-color: #ffdddd;
+.logs .entry.level-error .level {
+    background-color: #E74C3C;
+}
+
+.logs .entry:hover {
+    background-color: #3d3d3d;
 }
