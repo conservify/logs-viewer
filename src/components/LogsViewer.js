@@ -26,7 +26,7 @@ class LogEntry extends React.Component {
 
         const classes = "row entry level-" + zaplevel;
 
-        const taskUrl = "https://code.conservify.org/logs/search?rangetype=relative&fields=message%2Csource%2clogger%2ctask_id%2czaplevel&width=1916&highlightMessage=&relative=0&q=task_id%3A" + task_id;
+        const taskUrl = "https://code.conservify.org/logs/search?rangetype=relative&fields=message%2Csource%2clogger%2ctask_id%2czaplevel%2cservice_trace&width=1916&highlightMessage=&relative=0&q=task_id%3A" + task_id;
 
         return (
             <div>
