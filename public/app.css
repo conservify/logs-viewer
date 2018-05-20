@@ -1,0 +1,20 @@
+.logs {
+}
+
+.logs .entry {
+    font-family: "monospace";
+    font-size: 11px;
+}
+
+.logs .entry .ts, .logs .entry .logger {
+    font-size: 10px;
+}
+
+.logs .entry .extra {
+    padding-left: 10px;
+    color: #8f8f8f;
+}
+
+.logs .entry .extra .key {
+    font-weight: bold;
+}
