@@ -19,7 +19,7 @@ if (true) {
     }));
 }
 
-app.use(express.static(path.join(__dirname, "..", "public")));
+app.use('/logs-viewer', express.static(path.join(__dirname, "..", "public")));
 
 const api = graylog.connect(Config.graylog);
 
@@ -27,7 +27,7 @@ function getPage(number, perPage) {
     return new Promise((resolve, reject) => {
         api.searchRelative({
             query: 'tag:fkdev',
-            range: 300,
+            range: 500,
             limit: perPage,
             offset: number * perPage,
             sort: 'desc'
@@ -57,7 +57,7 @@ function getPages(number) {
     });
 }
 
-app.get("/logs.json", function(req, res) {
+app.get("/logs-viewer/logs.json", function(req, res) {
     getPage(0, 200).then(page => {
         res.end(JSON.stringify(page));
     });

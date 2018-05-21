@@ -6,7 +6,7 @@ module.exports = {
     mode: 'development',
     output: {
         path: __dirname + '/dist',
-        publicPath: '/public/',
+        publicPath: '/logs-viewer/public/',
         filename: 'bundle.js'
     },
     devServer: {

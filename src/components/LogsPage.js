@@ -25,7 +25,7 @@ export default class LogsPage extends React.Component {
     }
 
     query() {
-        return fetch("/logs.json")
+        return fetch("logs.json")
             .then(response => response.json())
             .then(data => {
                 const timer = setTimeout(() => {
