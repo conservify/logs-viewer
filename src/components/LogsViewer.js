@@ -8,7 +8,7 @@ const DockerFields = [ 'image_id', 'image_name', 'container_id', 'container_name
 const VisibleFields = [ 'source', 'timestamp', 'task_id', 'logger', 'message', 'zaplevel', 'service_trace', 'req_id' ];
 const OtherFields = [ 'zapts', 'stacktrace', 'caller' ] ;
 const ExcludingFields = [ ...GraylogFields, ...DockerFields, ...VisibleFields, ...OtherFields ];
-const ClickableFields = [ "device_id", "queue", "source_id", "handler", "message_type", "api_url" ];
+const ClickableFields = [ "device_id", "queue", "source_id", "handler", "message_type", "api_url", "modules" ];
 
 class LogEntry extends React.Component {
     getUrl(query) {
