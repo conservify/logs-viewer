@@ -8,30 +8,62 @@ const DockerFields = [ 'image_id', 'image_name', 'container_id', 'container_name
 const VisibleFields = [ 'source', 'timestamp', 'task_id', 'logger', 'message', 'zaplevel', 'service_trace' ];
 const OtherFields = [ 'zapts', 'stacktrace', 'caller' ] ;
 const ExcludingFields = [ ...GraylogFields, ...DockerFields, ...VisibleFields, ...OtherFields ];
+const ClickableFields = [ "device_id", "queue", "source_id", "handler", "message_type", "api_url" ];
 
 class LogEntry extends React.Component {
-    render() {
-        const { entry } = this.props;
+    getUrl(query) {
+        return "https://code.conservify.org/logs/search?rangetype=relative&fields=message%2Csource%2clogger%2cdevice_id%2cfirmware_version%2ctask_id%2czaplevel%2cservice_trace&width=1916&highlightMessage=&relative=0&q=" + query;
+    }
 
-        const { timestamp, task_id, source, logger, message, zaplevel, service_trace } = entry.message;
-        const ts = moment(timestamp).format("ddd, h:mm:ss");
+    getEntryUrl(entry) {
+        const { _id, task_id } = entry.message;
 
+        if (_.isUndefined(task_id)) {
+            return this.getUrl("_id%3A" + _id);
+        }
+
+        return this.getUrl("task_id%3A" + task_id);
+    }
+
+    onClickExtra(entry, key, value) {
+        const url = this.getUrl(key + "%3A" + value)
+        window.open(url, '_blank')
+    }
+
+    getExtras(entry) {
         const fields = _.pickBy(entry.message, (value, key) => {
             return !_.includes(ExcludingFields, key);
         });
 
         const extras = _.map(fields, (value, key) => {
-            return (<span key={key} className="extra"><span className="key">{key}</span>: <span className="value">{value}</span></span>);
+            if (_.includes(ClickableFields, key)) {
+                return (<span key={key} className="extra clickable" onClick={() => this.onClickExtra(entry, key, value)}><span className="key">{key}</span>: <span className="value">{value}</span></span>);
+            }
+            else {
+                return (<span key={key} className="extra"><span className="key">{key}</span>: <span className="value">{value}</span></span>);
+            }
         });
+
+        return extras;
+    }
+
+    render() {
+        const { entry } = this.props;
+
+        const { timestamp, task_id, source, logger, message, zaplevel, service_trace } = entry.message;
+
+        const ts = moment(timestamp).format("ddd, h:mm:ss");
+
+        const extras = this.getExtras(entry);
 
         const classes = "row entry level-" + zaplevel;
 
-        const taskUrl = "https://code.conservify.org/logs/search?rangetype=relative&fields=message%2Csource%2clogger%2ctask_id%2czaplevel%2cservice_trace&width=1916&highlightMessage=&relative=0&q=task_id%3A" + task_id;
+        const clickUrl = this.getEntryUrl(entry);
 
         return (
             <div>
                 <div className={classes}>
-                    <div className="col-md-1 ts"> <a target="_blank" href={taskUrl}>{ts}</a> <span className="level">{zaplevel}</span> </div>
+                    <div className="col-md-1 ts"> <a target="_blank" href={clickUrl}>{ts}</a> <span className="level">{zaplevel}</span> </div>
                     <div className="col-md-1 source"> {source} </div>
                     <div className="col-md-1 logger"> {logger} </div>
                     <div className="col-md-9 message"> {message} {extras}</div>

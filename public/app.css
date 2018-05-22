@@ -19,6 +19,14 @@
     font-weight: bold;
 }
 
+.logs .entry .extra.clickable .key {
+}
+
+.logs .entry .extra.clickable {
+    cursor: pointer;
+    color: #bfbfbf;
+}
+
 .logs .entry.level-warn .level {
     background-color: #ffc107;
 }
