@@ -3,4 +3,4 @@ WORKDIR /app
 COPY . /app
 RUN npm install
 EXPOSE 3000
-ENTRYPOINT [ "/app/play-zones", "--web-server" ]
+ENTRYPOINT [ "node_modules/.bin/babel-node", "server/server.js" ]

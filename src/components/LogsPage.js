@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Api } from '../lib/api.js';
+
 import LogsViewer from './LogsViewer';
 
 export default class LogsPage extends React.Component {
@@ -25,15 +27,13 @@ export default class LogsPage extends React.Component {
     }
 
     query() {
-        return fetch("logs.json")
-            .then(response => response.json())
-            .then(data => {
-                const timer = setTimeout(() => {
-                    this.query();
-                }, 5000);
+        return Api.getLogs().then(data => {
+            const timer = setTimeout(() => {
+                this.query();
+            }, 5000);
 
-                this.setState({ logs: data, timer: timer });
-            });
+            this.setState({ logs: data, timer: timer });
+        });
     }
 
     render() {

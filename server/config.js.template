@@ -1,13 +1,17 @@
 export default {
-	graylog: {
-		basicAuth: {
-			username: '',
-			password: ''
-		},
-		protocol: 'https',
-		host: '',
-		port: '443',
-		path: ''
-	}
+    graylog: {
+        basicAuth: {
+            username: '',
+            password: ''
+        },
+        protocol: 'https',
+        host: '',
+        port: '443',
+        path: ''
+    },
+    users: [{
+        username: '',
+        password: ''
+    }],
+    password: ''
 };
-

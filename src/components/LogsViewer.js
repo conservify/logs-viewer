@@ -46,7 +46,7 @@ export default class LogsViewer extends React.Component {
         const { logs } = this.props;
 
         if (!logs.messages) {
-            return <div>Loading</div>;
+            return <div className="page-loading"><h2>Loading</h2></div>;
         }
 
         return (
