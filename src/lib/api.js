@@ -29,7 +29,7 @@ class WebApi {
         });
     }
 
-    getLogs() {
+    getLogs(query) {
         if (!this.authenticated()) {
             return Promise.reject(new Error("Not authenticated"));
         }
@@ -38,7 +38,7 @@ class WebApi {
                 'Auth-Token': this.token
             }
         };
-        return fetch("logs.json", options).then(response => response.json());
+        return fetch("logs.json?query=" + query, options).then(response => response.json());
     }
 }
 

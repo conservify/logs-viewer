@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 
-import React from 'react'
+import React from 'react';
 
 const GraylogFields = [ '_id', 'gl2_source_input', 'gl2_source_node', 'streams', 'level', 'tag' ];
 const DockerFields = [ 'image_id', 'image_name', 'container_id', 'container_name', 'command', 'created' ];
@@ -26,8 +26,8 @@ class LogEntry extends React.Component {
     }
 
     onClickExtra(entry, key, value) {
-        const url = this.getUrl(key + "%3A" + value)
-        window.open(url, '_blank')
+        const url = this.getUrl(key + "%3A" + value);
+        window.open(url, '_blank');
     }
 
     getExtras(entry) {
@@ -69,7 +69,7 @@ class LogEntry extends React.Component {
                     <div className="col-md-9 message"> {message} {extras}</div>
                 </div>
             </div>
-        )
+        );
     }
 }
 
@@ -85,6 +85,6 @@ export default class LogsViewer extends React.Component {
             <div className='container-fluid logs'>
                 {logs.messages.map(e => <LogEntry key={e.message._id} entry={e} />)}
             </div>
-        )
+        );
     }
 }

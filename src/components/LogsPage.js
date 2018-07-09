@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 import { Api } from '../lib/api.js';
 
@@ -8,9 +8,12 @@ export default class LogsPage extends React.Component {
     constructor() {
         super();
 
+        const params = new URLSearchParams(window.location.search);
+
         this.state = {
             timer: null,
-            logs: { }
+            logs: { },
+            query: params.get("query") || ""
         };
     }
 
@@ -27,7 +30,8 @@ export default class LogsPage extends React.Component {
     }
 
     query() {
-        return Api.getLogs().then(data => {
+        const { query } = this.state;
+        return Api.getLogs(query).then(data => {
             const timer = setTimeout(() => {
                 this.query();
             }, 5000);
@@ -36,13 +40,43 @@ export default class LogsPage extends React.Component {
         });
     }
 
+    setQuery(ev) {
+        ev.preventDefault();
+    }
+
+    onSearch(ev) {
+        ev.preventDefault();
+
+        const query = this.refs.query.value;
+
+        this.setState({
+            query: query
+        });
+
+        Api.getLogs(query).then(data => {
+            this.setState({ logs: data });
+        });
+    }
+
     render() {
         const { logs } = this.state;
 
         return (
             <div className=''>
-                <LogsViewer logs={logs} />
+              <form onSubmit={this.onSearch.bind(this)}>
+                <div className="row">
+                  <div className="col-lg-12">
+                    <div className="input-group">
+                      <span className="input-group-btn">
+                        <button className="btn btn-primary" type="submit">Search</button>
+                      </span>
+                      <input className="form-control" type="text" placeholder="Search" ref="query" />
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <LogsViewer logs={logs} />
             </div>
-        )
+        );
     }
 }

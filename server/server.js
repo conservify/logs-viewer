@@ -63,10 +63,10 @@ app.use((req, res, chain) => {
 
 const api = graylog.connect(Config.graylog);
 
-function getPage(number, perPage) {
+function getPage(query, number, perPage) {
     return new Promise((resolve, reject) => {
         api.searchRelative({
-            query: 'tag:fkdev',
+            query: query,
             range: 500,
             limit: perPage,
             offset: number * perPage,
@@ -82,15 +82,15 @@ function getPage(number, perPage) {
     });
 }
 
-function getPages(number) {
+function getPages(query, number) {
     console.log("Querying", number);
-    return getPage(number).then(data => {
+    return getPage(query, number).then(data => {
         console.log("Page", number, data.messages.length);
         if (data.messages.length == 0) {
             return [];
         }
         else {
-            return getPages(number + 1).then(n => {
+            return getPages(query, number + 1).then(n => {
                 return [ data, ...n ];
             });
         }
@@ -112,7 +112,11 @@ app.get("/logs-viewer/logs.json", function(req, res) {
         return;
     }
 
-    getPage(0, 200).then(page => {
+    const { query } = req.query;
+
+    console.log(query);
+
+    getPage(query, 0, 200).then(page => {
         res.end(JSON.stringify(page));
     });
 });
