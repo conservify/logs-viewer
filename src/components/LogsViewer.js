@@ -5,7 +5,7 @@ import React from 'react';
 
 const GraylogFields = [ '_id', 'gl2_source_input', 'gl2_source_node', 'gl2_remote_ip', 'gl2_remote_port', 'streams', 'level', 'tag' ];
 const DockerFields = [ 'image_id', 'image_name', 'container_id', 'container_name', 'command', 'created' ];
-const VisibleFields = [ 'source', 'timestamp', 'task_id', 'logger', 'message', 'zaplevel', 'service_trace', 'req_id' ];
+const VisibleFields = [ 'source', 'timestamp', 'task_id', 'logger', 'message', 'zaplevel', 'service_trace', 'req_id', 'application_name' ];
 const OtherFields = [ 'zapts', 'stacktrace', 'caller' ] ;
 const ExcludingFields = [ ...GraylogFields, ...DockerFields, ...VisibleFields, ...OtherFields ];
 const ClickableFields = [ "device_id", "queue", "source_id", "handler", "message_type", "api_url", "modules" ];
@@ -50,7 +50,7 @@ class LogEntry extends React.Component {
     render() {
         const { entry } = this.props;
 
-        const { timestamp, task_id, source, logger, message, zaplevel, service_trace } = entry.message;
+        const { timestamp, task_id, source, application_name, logger, message, zaplevel, service_trace } = entry.message;
 
         const ts = moment(timestamp).format("ddd, h:mm:ss");
 
@@ -65,7 +65,7 @@ class LogEntry extends React.Component {
                 <div className={classes}>
                     <div className="col-md-1 ts"> <a target="_blank" href={clickUrl}>{ts}</a> <span className="level">{zaplevel}</span> </div>
                     <div className="col-md-1 source"> {source} </div>
-                    <div className="col-md-1 logger"> {logger} </div>
+                    <div className="col-md-1 logger"> {application_name}{logger} </div>
                     <div className="col-md-9 message"> {message} {extras}</div>
                 </div>
             </div>
