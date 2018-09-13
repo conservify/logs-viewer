@@ -1,10 +1,10 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 import { Api } from './lib/api';
 
-import LoginPage from './components/LoginPage'
-import LogsPage from './components/LogsPage'
+import LoginPage from './components/LoginPage';
+import LogsPage from './components/LogsPage';
 
 class App extends React.Component {
     constructor() {
@@ -31,4 +31,4 @@ class App extends React.Component {
     }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'))
+ReactDOM.render(<App />, document.getElementById('app'));

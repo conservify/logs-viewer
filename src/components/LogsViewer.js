@@ -3,7 +3,7 @@ import moment from 'moment';
 
 import React from 'react';
 
-const GraylogFields = [ '_id', 'gl2_source_input', 'gl2_source_node', 'streams', 'level', 'tag' ];
+const GraylogFields = [ '_id', 'gl2_source_input', 'gl2_source_node', 'gl2_remote_ip', 'gl2_remote_port', 'streams', 'level', 'tag' ];
 const DockerFields = [ 'image_id', 'image_name', 'container_id', 'container_name', 'command', 'created' ];
 const VisibleFields = [ 'source', 'timestamp', 'task_id', 'logger', 'message', 'zaplevel', 'service_trace', 'req_id' ];
 const OtherFields = [ 'zapts', 'stacktrace', 'caller' ] ;
