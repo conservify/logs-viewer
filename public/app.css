@@ -2,8 +2,8 @@
 }
 
 .logs .entry {
-    font-family: "Courier";
-    font-size: 11px;
+    font-family: "Courier", "Courier New";
+    font-size: 10px;
 }
 
 .logs .entry .ts, .logs .entry .logger {
