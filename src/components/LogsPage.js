@@ -19,6 +19,8 @@ export default class LogsPage extends React.Component {
 
     componentDidMount() {
         this.query();
+
+        this.refs.query.value = this.state.query;
     }
 
     componentWillUnmount() {
