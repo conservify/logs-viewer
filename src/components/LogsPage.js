@@ -29,14 +29,26 @@ export default class LogsPage extends React.Component {
         }
     }
 
+    schedule(data) {
+        const timer = setTimeout(() => {
+            this.query();
+        }, 5000);
+
+        if (data) {
+            this.setState({ logs: data, timer: timer });
+        }
+        else {
+            this.setState({ timer: timer });
+        }
+    }
+
     query() {
         const { query } = this.state;
-        return Api.getLogs(query).then(data => {
-            const timer = setTimeout(() => {
-                this.query();
-            }, 5000);
 
-            this.setState({ logs: data, timer: timer });
+        return Api.getLogs(query).then(data => {
+            this.schedule(data);
+        }, () => {
+            this.schedule(null);
         });
     }
 
