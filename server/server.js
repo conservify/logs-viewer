@@ -22,8 +22,8 @@ class SimpleToken {
 
     verify(cipher) {
         try {
-            const decipher = crypto.createDecipher('aes-256-ctr', Config.password)
-            let plain = decipher.update(cipher, 'hex', 'utf8')
+            const decipher = crypto.createDecipher('aes-256-ctr', Config.password);
+            let plain = decipher.update(cipher, 'hex', 'utf8');
             plain += decipher.final('utf8');
             return _(Config.users).filter(u => u.username == plain).some();
         }
@@ -56,10 +56,10 @@ if (true) {
 }
 
 app.use('/logs-viewer', express.static(path.join(__dirname, "..", "public")));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use((req, res, chain) => {
     chain();
-})
+});
 
 const api = graylog.connect(Config.graylog);
 
@@ -73,10 +73,10 @@ function getPage(query, number, perPage) {
             sort: 'desc'
         }, (err, data) => {
             if (err != null) {
-                reject(err)
+                reject(err);
             }
             else {
-                resolve(data)
+                resolve(data);
             }
         });
     });
