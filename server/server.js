@@ -63,38 +63,64 @@ app.use((req, res, chain) => {
 
 const api = graylog.connect(Config.graylog);
 
-function getPage(query, number, perPage) {
+function getPage(criteria, number, perPage) {
     return new Promise((resolve, reject) => {
-        api.searchRelative({
-            query: query,
-            range: 500,
-            limit: perPage,
-            offset: number * perPage,
-            sort: 'desc'
-        }, (err, data) => {
-            if (err != null) {
-                reject(err);
-            }
-            else {
-                resolve(data);
-            }
-        });
+        if (criteria.from || criteria.to) {
+            api.searchAbsolute({
+                query: criteria.query,
+                from: criteria.from,
+                to: criteria.to,
+                limit: perPage,
+                offset: number * perPage,
+                sort: 'desc'
+            }, (err, data) => {
+                if (err != null) {
+                    reject(err);
+                }
+                else {
+                    resolve(data);
+                }
+            });
+        }
+        else {
+            api.searchRelative({
+                query: criteria.query,
+                range: criteria.range,
+                limit: perPage,
+                offset: number * perPage,
+                sort: 'desc'
+            }, (err, data) => {
+                if (err != null) {
+                    reject(err);
+                }
+                else {
+                    resolve(data);
+                }
+            });
+        }
     });
 }
 
-function getPages(query, number) {
+function getPages(criteria, number) {
     console.log("Querying", number);
-    return getPage(query, number).then(data => {
+    return getPage(criteria, number).then(data => {
         console.log("Page", number, data.messages.length);
         if (data.messages.length == 0) {
             return [];
         }
         else {
-            return getPages(query, number + 1).then(n => {
+            return getPages(criteria, number + 1).then(n => {
                 return [ data, ...n ];
             });
         }
     });
+}
+
+function buildSaneCriteria(original) {
+    if (!original.from && !original.to) {
+        original.range = original.range || 500;
+    }
+    return original;
 }
 
 app.post("/logs-viewer/login.json", function(req, res) {
@@ -112,11 +138,18 @@ app.get("/logs-viewer/logs.json", function(req, res) {
         return;
     }
 
-    const { query } = req.query;
+    const { query, range, from, to } = req.query;
 
-    console.log(query);
+    const criteria = buildSaneCriteria({
+        query,
+        range,
+        from,
+        to
+    });
 
-    getPage(query, 0, 200).then(page => {
+    console.log(criteria);
+
+    getPage(criteria, 0, 200).then(page => {
         res.end(JSON.stringify(page));
     });
 });

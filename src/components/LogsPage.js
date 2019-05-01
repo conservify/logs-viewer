@@ -13,7 +13,10 @@ export default class LogsPage extends React.Component {
         this.state = {
             timer: null,
             logs: { },
-            query: params.get("query") || ""
+            query: params.get("query") || "",
+            range: params.get("range"),
+            from: params.get("from"),
+            to: params.get("to"),
         };
     }
 
@@ -47,7 +50,7 @@ export default class LogsPage extends React.Component {
     query() {
         const { query } = this.state;
 
-        return Api.getLogs(query).then(data => {
+        return Api.getLogs(this.getCriteria()).then(data => {
             this.schedule(data);
         }, () => {
             this.schedule(null);
@@ -67,10 +70,21 @@ export default class LogsPage extends React.Component {
             query: query
         });
 
-        Api.getLogs(query).then(data => {
+        Api.getLogs(this.getCriteria()).then(data => {
             this.setState({ logs: data });
         });
     }
+
+    getCriteria() {
+        const { query, range, from, to } = this.state;
+
+        const c = {
+            query, range, from, to
+        };
+
+        return c;
+    }
+
 
     render() {
         const { logs } = this.state;

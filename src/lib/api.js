@@ -29,16 +29,19 @@ class WebApi {
         });
     }
 
-    getLogs(query) {
+    getLogs(criteria) {
         if (!this.authenticated()) {
             return Promise.reject(new Error("Not authenticated"));
         }
+
         const options = {
             headers: {
                 'Auth-Token': this.token
             }
         };
-        return fetch("logs.json?query=" + query, options).then(response => response.json());
+
+        const query = Object.keys(criteria).filter(k => criteria[k]).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(criteria[k])).join('&');
+        return fetch("logs.json?" + query, options).then(response => response.json());
     }
 }
 
