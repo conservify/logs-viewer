@@ -72,7 +72,7 @@ function getPage(criteria, number, perPage) {
                 to: criteria.to,
                 limit: perPage,
                 offset: number * perPage,
-                sort: 'desc'
+                sort: 'timestamp:desc'
             }, (err, data) => {
                 if (err != null) {
                     reject(err);
@@ -88,7 +88,7 @@ function getPage(criteria, number, perPage) {
                 range: criteria.range,
                 limit: perPage,
                 offset: number * perPage,
-                sort: 'desc'
+                sort: 'timestamp:desc'
             }, (err, data) => {
                 if (err != null) {
                     reject(err);
