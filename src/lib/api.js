@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 
 class WebApi {
     constructor() {
-        this.token = sessionStorage.getItem("authToken");
+        this.token = localStorage.getItem("authToken");
     }
 
     authenticated() {
@@ -11,7 +11,7 @@ class WebApi {
 
     setToken(token) {
         this.token = token;
-        sessionStorage.setItem("authToken", token);
+        localStorage.setItem("authToken", token);
     }
 
     login(body) {
