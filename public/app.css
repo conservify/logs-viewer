@@ -33,6 +33,7 @@
 
 .logs .entry.level-error .level {
     background-color: #E74C3C;
+    background-color: #8B0000;
 }
 
 .logs .entry:hover {
