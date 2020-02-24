@@ -21,6 +21,7 @@ const FbFields = [
     '@metadata_beat',
     '@metadata_type',
     '@metadata_version',
+    '@metadata_pipeline',
     'agent_ephemeral_id',
     'agent_hostname',
     'agent_id',
@@ -49,6 +50,11 @@ const FbFields = [
     'input_type',
     'log_file_path',
     'log_offset',
+    'event_module',
+    'event_dataset',
+    'event_timezone',
+    'fileset_name',
+    'service_type',
 ]
 const DockerFields = ['image_id', 'image_name', 'container_id', 'container_name', 'command', 'created']
 const VisibleFields = ['source', 'timestamp', 'task_id', 'logger', 'message', 'zaplevel', 'service_trace', 'req_id', 'application_name']
