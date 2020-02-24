@@ -112,7 +112,7 @@ class LogEntry extends React.Component {
     render() {
         const { entry } = this.props
 
-        const { timestamp, task_id, source, application_name, logger, message, zaplevel, service_trace } = entry.message
+        const { timestamp, task_id, source, application_name, logger, message, zaplevel, service_trace, program } = entry.message
 
         const ts = moment(timestamp).format('ddd, h:mm:ss')
 
@@ -135,6 +135,7 @@ class LogEntry extends React.Component {
                     <div className="col-md-1 source"> {source} </div>
                     <div className="col-md-1 logger">
                         {' '}
+                        {program}
                         {application_name}
                         {logger}{' '}
                     </div>
