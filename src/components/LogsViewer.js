@@ -10,12 +10,14 @@ const GraylogFields = [
     'gl2_remote_ip',
     'gl2_remote_port',
     'gl2_accounted_message_size',
+    'gl2_message_id',
     'streams',
     'level',
     'tag',
     'format',
 ]
 const FbFields = [
+    '@timestamp',
     '@metadata_beat',
     '@metadata_type',
     '@metadata_version',
