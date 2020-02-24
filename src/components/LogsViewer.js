@@ -58,7 +58,7 @@ const FbFields = [
 ]
 const DockerFields = ['image_id', 'image_name', 'container_id', 'container_name', 'command', 'created']
 const VisibleFields = ['source', 'timestamp', 'task_id', 'logger', 'message', 'zaplevel', 'service_trace', 'req_id', 'application_name']
-const OtherFields = ['zapts', 'stacktrace', 'caller']
+const OtherFields = ['zapts', 'stacktrace', 'caller', 'pid', 'program']
 const ExcludingFields = [...GraylogFields, ...DockerFields, ...VisibleFields, ...OtherFields, ...FbFields]
 const ClickableFields = ['device_id', 'queue', 'source_id', 'handler', 'message_type', 'api_url', 'modules']
 
