@@ -149,7 +149,7 @@ app.get("/logs-viewer/logs.json", function(req, res) {
 
     console.log(criteria);
 
-    getPage(criteria, 0, 200).then(page => {
+    getPage(criteria, 0, 1000).then(page => {
         res.end(JSON.stringify(page));
     });
 });
