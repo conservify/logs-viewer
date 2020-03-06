@@ -114,7 +114,7 @@ class LogEntry extends React.Component {
         const { timestamp, task_id, source, application_name, logger, message, zaplevel, service_trace, program } = entry.message
 
         const classes = 'row entry level-' + zaplevel
-        const ts = moment(timestamp).format('ddd, h:mm:ss')
+        const ts = moment(timestamp).format('ddd, hh:mm:ss')
         const extras = this.getExtras(entry, extraExcludedFields)
         const clickUrl = this.getEntryUrl(entry)
 
