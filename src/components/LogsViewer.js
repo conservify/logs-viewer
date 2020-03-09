@@ -102,6 +102,7 @@ class LogEntry extends React.Component {
         const visibleFields = this.getVisibleFields(entry, extraExcludedFields, extraIncludedFields)
 
         const visibleData = _(visibleFields)
+            .filter(key => entry.message[key])
             .map(key => {
                 return {
                     key: key,
