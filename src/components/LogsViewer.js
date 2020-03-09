@@ -85,12 +85,34 @@ class LogEntry extends React.Component {
         window.open(url, '_blank')
     }
 
-    getExtras(entry, extraExcludedFields) {
-        const fields = _.pickBy(entry.message, (value, key) => {
-            return !_.includes(ExcludingFields, key) && !_.includes(extraExcludedFields, key)
-        })
+    getVisibleFields(entry, extraExcludedFields, extraIncludedFields) {
+        if (_.some(extraIncludedFields)) {
+            return extraIncludedFields
+        }
 
-        const extras = _.map(fields, (value, key) => {
+        return _(entry.message)
+            .keys()
+            .filter(key => {
+                return !_.includes(ExcludingFields, key) && !_.includes(extraExcludedFields, key)
+            })
+            .value()
+    }
+
+    getExtras(entry, extraExcludedFields, extraIncludedFields) {
+        const visibleFields = this.getVisibleFields(entry, extraExcludedFields, extraIncludedFields)
+
+        const visibleData = _(visibleFields)
+            .map(key => {
+                return {
+                    key: key,
+                    value: entry.message[key],
+                }
+            })
+            .keyBy('key')
+            .mapValues('value')
+            .value()
+
+        return _.map(visibleData, (value, key) => {
             if (_.includes(ClickableFields, key)) {
                 return (
                     <span key={key} className="extra clickable" onClick={() => this.onClickExtra(entry, key, value)}>
@@ -105,17 +127,15 @@ class LogEntry extends React.Component {
                 )
             }
         })
-
-        return extras
     }
 
     render() {
-        const { entry, extraExcludedFields } = this.props
+        const { entry, extraExcludedFields, extraIncludedFields } = this.props
         const { timestamp, task_id, source, application_name, logger, message, zaplevel, service_trace, program } = entry.message
 
         const classes = 'row entry level-' + zaplevel
         const ts = moment(timestamp).format('ddd, hh:mm:ss')
-        const extras = this.getExtras(entry, extraExcludedFields)
+        const extras = this.getExtras(entry, extraExcludedFields, extraIncludedFields)
         const clickUrl = this.getEntryUrl(entry)
 
         return (
@@ -147,7 +167,7 @@ class LogEntry extends React.Component {
 
 export default class LogsViewer extends React.Component {
     render() {
-        const { logs, fields } = this.props
+        const { logs, exclude, include } = this.props
 
         if (!logs.messages) {
             return (
@@ -157,19 +177,25 @@ export default class LogsViewer extends React.Component {
             )
         }
 
-		function getExtraExcludedFields(fields) {
-			if (!fields || fields.length == 0) {
-				return [];
-			}
-			return fields.split(",")
-		}
+        function splitFields(fields) {
+            if (!fields || fields.length == 0) {
+                return []
+            }
+            return fields.split(',')
+        }
 
-		const extraExcludedFields = getExtraExcludedFields(fields);
+        const extraExcludedFields = splitFields(exclude)
+        const extraIncludedFields = splitFields(include)
 
         return (
             <div className="container-fluid logs">
                 {logs.messages.map(e => (
-					<LogEntry key={e.message._id} entry={e} extraExcludedFields={extraExcludedFields} />
+                    <LogEntry
+                        key={e.message._id}
+                        entry={e}
+                        extraExcludedFields={extraExcludedFields}
+                        extraIncludedFields={extraIncludedFields}
+                    />
                 ))}
             </div>
         )

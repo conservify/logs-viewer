@@ -17,7 +17,8 @@ export default class LogsPage extends React.Component {
             range: params.get('range'),
             from: params.get('from'),
             to: params.get('to'),
-            fields: params.get('fields') || '',
+            exclude: params.get('exclude') || '',
+            include: params.get('include') || '',
         }
     }
 
@@ -92,7 +93,7 @@ export default class LogsPage extends React.Component {
     }
 
     render() {
-        const { logs, fields } = this.state
+        const { logs, exclude, include } = this.state
 
         return (
             <div className="">
@@ -110,7 +111,7 @@ export default class LogsPage extends React.Component {
                         </div>
                     </div>
                 </form>
-                <LogsViewer logs={logs} fields={fields} />
+                <LogsViewer logs={logs} exclude={exclude} include={include} />
             </div>
         )
     }
