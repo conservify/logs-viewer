@@ -131,7 +131,7 @@ class LogEntry extends React.Component {
     }
 
     render() {
-        const { entry, extraExcludedFields, extraIncludedFields, focusedTask, onEnter, onLeave } = this.props
+        const { entry, extraExcludedFields, extraIncludedFields, focusedTask, onFocus } = this.props
         const { timestamp, task_id, source, application_name, logger, message, zaplevel, service_trace, program } = entry.message
 
         const classes = ['row', 'entry']
@@ -153,7 +153,7 @@ class LogEntry extends React.Component {
 
         return (
             <div>
-                <div className={allClasses} onMouseEnter={e => onEnter(entry)} onMouseLeave={e => onLeave(entry)}>
+                <div className={allClasses} onClick={e => onFocus(entry)}>
                     <div className="col-md-1 ts">
                         {' '}
                         <a target="_blank" href={clickUrl}>
@@ -186,17 +186,17 @@ export default class LogsViewer extends React.Component {
         }
     }
 
-    onEnter(entry) {
-        const { task_id } = entry.message
-        this.setState({
-            focusedTask: task_id,
-        })
-    }
-
-    onLeave(entry) {
-        this.setState({
-            focusedTask: null,
-        })
+    onFocus(entry) {
+        if (entry) {
+            const { task_id } = entry.message
+            this.setState({
+                focusedTask: task_id,
+            })
+        } else {
+            this.setState({
+                focusedTask: null,
+            })
+        }
     }
 
     render() {
@@ -228,8 +228,7 @@ export default class LogsViewer extends React.Component {
                         key={e.message._id}
                         entry={e}
                         focusedTask={focusedTask}
-                        onEnter={entry => this.onEnter(entry)}
-                        onLeave={entry => this.onLeave(entry)}
+                        onFocus={entry => this.onFocus(entry)}
                         extraExcludedFields={extraExcludedFields}
                         extraIncludedFields={extraIncludedFields}
                     />
