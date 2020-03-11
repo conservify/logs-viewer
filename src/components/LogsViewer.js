@@ -64,10 +64,7 @@ const ClickableFields = ['device_id', 'queue', 'source_id', 'handler', 'message_
 
 class LogEntry extends React.Component {
     getUrl(query) {
-        return (
-            'https://code.conservify.org/logs/search?rangetype=relative&fields=message%2Csource%2clogger%2cdevice_id%2cfirmware_version%2ctask_id%2czaplevel%2cservice_trace&width=1916&highlightMessage=&relative=0&q=' +
-            query
-        )
+        return '/logs-viewer?range=864000&query=' + query
     }
 
     getEntryUrl(entry) {
