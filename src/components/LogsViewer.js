@@ -60,25 +60,25 @@ const DockerFields = ['image_id', 'image_name', 'container_id', 'container_name'
 const VisibleFields = ['source', 'timestamp', 'task_id', 'logger', 'message', 'zaplevel', 'service_trace', 'req_id', 'application_name']
 const OtherFields = ['zapts', 'stacktrace', 'caller', 'pid', 'program']
 const ExcludingFields = [...GraylogFields, ...DockerFields, ...VisibleFields, ...OtherFields, ...FbFields]
-const ClickableFields = ['device_id', 'queue', 'source_id', 'handler', 'message_type', 'api_url', 'modules']
+const ClickableFields = ['device_id', 'queue', 'source_id', 'handler', 'message_type', 'api_url', 'modules', 'user_id', 'from']
 
 class LogEntry extends React.Component {
     getUrl(query) {
-        return '/logs-viewer?range=864000&query=' + query
+        return '/logs-viewer?range=864000&query=' + encodeURIComponent(query)
     }
 
     getEntryUrl(entry) {
         const { _id, task_id } = entry.message
 
         if (_.isUndefined(task_id)) {
-            return this.getUrl('_id%3A' + _id)
+            return this.getUrl('_id:"' + _id + '"')
         }
 
-        return this.getUrl('task_id%3A' + task_id)
+        return this.getUrl('task_id:"' + task_id + '"')
     }
 
     onClickExtra(entry, key, value) {
-        const url = this.getUrl(key + '%3A' + value)
+        const url = this.getUrl(key + ':"' + value + '"')
         window.open(url, '_blank')
     }
 
