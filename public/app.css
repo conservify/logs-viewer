@@ -8,6 +8,7 @@
 
 .logs .entry .ts, .logs .entry .logger {
     font-size: 10px;
+	overflow: hidden;
 }
 
 .logs .entry .extra {
