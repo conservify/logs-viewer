@@ -2,51 +2,51 @@
 }
 
 .logs .entry {
-    font-family: "Courier New", "Courier";
-    font-size: 10px;
+	font-family: "Courier New", "Courier";
+	font-size: 10px;
 }
 
 .logs .entry .ts, .logs .entry .logger {
-    font-size: 10px;
+	font-size: 10px;
 	overflow: hidden;
 }
 
 .logs .entry .extra {
-    padding-left: 10px;
-    color: #8f8f8f;
+	padding-left: 10px;
+	color: #8f8f8f;
 }
 
 .logs .entry .extra .key {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .logs .entry .extra.clickable .key {
 }
 
 .logs .entry .extra.clickable {
-    cursor: pointer;
-    color: #bfbfbf;
+	cursor: pointer;
+	color: #bfbfbf;
 }
 
 .logs .entry.level-warn .level {
-    background-color: #ffc107;
+	background-color: #ffc107;
 }
 
 .logs .entry.level-error .level {
-    background-color: #E74C3C;
-    background-color: #8B0000;
+	background-color: #E74C3C;
+	background-color: #8B0000;
 }
 
 .logs .entry.focused {
-    background-color: #3d3d3d;
+	background-color: #3d3d3d;
 }
 
 .logs .entry:hover {
-    background-color: #3d3d3d;
+	background-color: #3d3d3d;
 }
 
 .page-loading {
-    margin: 0 auto;
-    width: 50%;
-    text-align: center;
+	margin: 0 auto;
+	width: 50%;
+	text-align: center;
 }
