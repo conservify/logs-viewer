@@ -56,10 +56,11 @@ const FbFields = [
     'fileset_name',
     'service_type',
 ]
+const JavaFields = ['java_thread_name', 'sequence', 'java_pid', 'java_level', 'java_thread_id']
 const DockerFields = ['image_id', 'image_name', 'container_id', 'container_name', 'command', 'created']
 const VisibleFields = ['source', 'timestamp', 'task_id', 'logger', 'message', 'zaplevel', 'service_trace', 'req_id', 'application_name']
 const OtherFields = ['zapts', 'stacktrace', 'caller', 'pid', 'program']
-const ExcludingFields = [...GraylogFields, ...DockerFields, ...VisibleFields, ...OtherFields, ...FbFields]
+const ExcludingFields = [...GraylogFields, ...DockerFields, ...VisibleFields, ...OtherFields, ...FbFields, ...JavaFields]
 const ClickableFields = ['device_id', 'queue', 'source_id', 'handler', 'message_type', 'api_url', 'modules', 'user_id', 'from']
 
 class LogEntry extends React.Component {
