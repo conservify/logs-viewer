@@ -89,7 +89,7 @@ class LogEntry extends React.Component {
 
         return _(entry.message)
             .keys()
-            .filter(key => {
+            .filter((key) => {
                 return !_.includes(ExcludingFields, key) && !_.includes(extraExcludedFields, key)
             })
             .value()
@@ -99,8 +99,8 @@ class LogEntry extends React.Component {
         const visibleFields = this.getVisibleFields(entry, extraExcludedFields, extraIncludedFields)
 
         const visibleData = _(visibleFields)
-            .filter(key => entry.message[key])
-            .map(key => {
+            .filter((key) => entry.message[key])
+            .map((key) => {
                 return {
                     key: key,
                     value: entry.message[key],
@@ -111,6 +111,13 @@ class LogEntry extends React.Component {
             .value()
 
         return _.map(visibleData, (value, key) => {
+            if (_.isObject(value) || _.isArray(value)) {
+                return (
+                    <span key={key} className="extra">
+                        <span className="key">{key}</span>: <span className="value">{JSON.stringify(value)}</span>
+                    </span>
+                )
+            }
             if (_.includes(ClickableFields, key)) {
                 return (
                     <span key={key} className="extra clickable" onClick={() => this.onClickExtra(entry, key, value)}>
@@ -150,7 +157,7 @@ class LogEntry extends React.Component {
 
         return (
             <div>
-                <div className={allClasses} onClick={e => onFocus(entry)}>
+                <div className={allClasses} onClick={(e) => onFocus(entry)}>
                     <div className="col-md-1 ts">
                         {' '}
                         <a target="_blank" href={clickUrl}>
@@ -220,12 +227,12 @@ export default class LogsViewer extends React.Component {
 
         return (
             <div className="container-fluid logs">
-                {logs.messages.map(e => (
+                {logs.messages.map((e) => (
                     <LogEntry
                         key={e.message._id}
                         entry={e}
                         focusedTask={focusedTask}
-                        onFocus={entry => this.onFocus(entry)}
+                        onFocus={(entry) => this.onFocus(entry)}
                         extraExcludedFields={extraExcludedFields}
                         extraIncludedFields={extraIncludedFields}
                     />
