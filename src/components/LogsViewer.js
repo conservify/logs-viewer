@@ -81,6 +81,7 @@ const OtherExcludedFields = [
     'ts_converted',
     'envoy_time',
     'levels',
+    'raw',
 ]
 const ExcludingFields = [
     ...GraylogFields,
