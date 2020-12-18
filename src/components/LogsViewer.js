@@ -69,8 +69,28 @@ const EnvoyFIelds = [
 const JavaFields = ['java_thread_name', 'sequence', 'java_pid', 'java_level', 'java_thread_id']
 const DockerFields = ['image_id', 'image_name', 'container_id', 'container_name', 'command', 'created']
 const VisibleFields = ['source', 'timestamp', 'task_id', 'logger', 'message', 'zaplevel', 'service_trace', 'req_id', 'application_name']
-const OtherFields = ['zapts', 'stacktrace', 'caller', 'pid', 'program', 'old_message', 'old_time', 'time_converted', 'ts_converted']
-const ExcludingFields = [...GraylogFields, ...DockerFields, ...VisibleFields, ...OtherFields, ...FbFields, ...JavaFields, ...EnvoyFIelds]
+const OtherExcludedFields = [
+    'zapts',
+    'stacktrace',
+    'caller',
+    'pid',
+    'program',
+    'old_message',
+    'old_time',
+    'time_converted',
+    'ts_converted',
+    'envoy_time',
+    'levels',
+]
+const ExcludingFields = [
+    ...GraylogFields,
+    ...DockerFields,
+    ...VisibleFields,
+    ...OtherExcludedFields,
+    ...FbFields,
+    ...JavaFields,
+    ...EnvoyFIelds,
+]
 const ClickableFields = ['device_id', 'queue', 'source_id', 'handler', 'message_type', 'api_url', 'modules', 'user_id', 'from']
 
 class LogEntry extends React.Component {
@@ -165,6 +185,15 @@ class LogEntry extends React.Component {
         const ts = moment(timestamp).format('ddd, hh:mm:ss')
         const extras = this.getExtras(entry, extraExcludedFields, extraIncludedFields)
         const clickUrl = this.getEntryUrl(entry)
+        const level = ['zaplevel', 'levels']
+            .map((key) => entry.message[key])
+            .filter((v) => v)
+            .join(', ')
+
+        const detail = ['program', 'application_name', 'logger']
+            .map((key) => entry.message[key])
+            .filter((v) => v)
+            .join(', ')
 
         return (
             <div>
@@ -174,15 +203,10 @@ class LogEntry extends React.Component {
                         <a target="_blank" href={clickUrl}>
                             {ts}
                         </a>{' '}
-                        <span className="level">{zaplevel}</span>{' '}
+                        <span className="level">{level}</span>{' '}
                     </div>
                     <div className="col-md-1 source"> {source} </div>
-                    <div className="col-md-1 logger">
-                        {' '}
-                        {program}
-                        {application_name}
-                        {logger}{' '}
-                    </div>
+                    <div className="col-md-1 logger"> {detail} </div>
                     <div className="col-md-9 message">
                         {' '}
                         {message} {extras}
