@@ -193,14 +193,16 @@ class LogEntry extends React.Component {
             }
         }
 
+        function cleanup_source_host(raw) {
+            return (raw || '').replace('https://', '').replace('.conservify.org', '')
+        }
+
         const allClasses = classes.join(' ')
         const ts = moment(timestamp).format('ddd, hh:mm:ss')
         const extras = this.getExtras(entry, extraExcludedFields, extraIncludedFields)
         const clickUrl = this.getEntryUrl(entry)
-        const source = ['source', 'source_host']
-            .map((key) => entry.message[key])
-            .filter((v) => v)
-            .join(', ')
+        const source_host = cleanup_source_host(entry.message['source_host'])
+        const source = [entry['source'], source_host].filter((v) => v).join(', ')
 
         const level = ['zaplevel', 'levels']
             .map((key) => entry.message[key])
