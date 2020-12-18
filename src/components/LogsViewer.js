@@ -202,7 +202,7 @@ class LogEntry extends React.Component {
         const extras = this.getExtras(entry, extraExcludedFields, extraIncludedFields)
         const clickUrl = this.getEntryUrl(entry)
         const source_host = cleanup_source_host(entry.message['source_host'])
-        const source = [entry['source'], source_host].filter((v) => v).join(', ')
+        const source = [entry.message['source'], source_host].filter((v) => v).join(', ')
 
         const level = ['zaplevel', 'levels']
             .map((key) => entry.message[key])
