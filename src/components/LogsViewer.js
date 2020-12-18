@@ -68,7 +68,19 @@ const EnvoyFIelds = [
 ]
 const JavaFields = ['java_thread_name', 'sequence', 'java_pid', 'java_level', 'java_thread_id']
 const DockerFields = ['image_id', 'image_name', 'container_id', 'container_name', 'command', 'created']
-const VisibleFields = ['source', 'timestamp', 'task_id', 'logger', 'message', 'zaplevel', 'service_trace', 'req_id', 'application_name']
+const VisibleFields = [
+    'source',
+    'source_host',
+    'timestamp',
+    'task_id',
+    'logger',
+    'message',
+    'zaplevel',
+    'service_trace',
+    'req_id',
+    'application_name',
+    'levels',
+]
 const OtherExcludedFields = [
     'zapts',
     'stacktrace',
@@ -80,7 +92,6 @@ const OtherExcludedFields = [
     'time_converted',
     'ts_converted',
     'envoy_time',
-    'levels',
     'raw',
 ]
 const ExcludingFields = [
