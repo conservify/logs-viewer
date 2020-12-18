@@ -168,7 +168,7 @@ class LogEntry extends React.Component {
 
     render() {
         const { entry, extraExcludedFields, extraIncludedFields, focusedTask, onFocus } = this.props
-        const { timestamp, task_id, source, application_name, logger, message, zaplevel, service_trace, program } = entry.message
+        const { timestamp, task_id, application_name, logger, message, zaplevel, service_trace, program } = entry.message
 
         const classes = ['row', 'entry']
 
@@ -186,6 +186,11 @@ class LogEntry extends React.Component {
         const ts = moment(timestamp).format('ddd, hh:mm:ss')
         const extras = this.getExtras(entry, extraExcludedFields, extraIncludedFields)
         const clickUrl = this.getEntryUrl(entry)
+        const source = ['source', 'source_host']
+            .map((key) => entry.message[key])
+            .filter((v) => v)
+            .join(', ')
+
         const level = ['zaplevel', 'levels']
             .map((key) => entry.message[key])
             .filter((v) => v)
