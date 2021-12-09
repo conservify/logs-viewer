@@ -64,8 +64,10 @@ app.use((req, res, chain) => {
 const api = graylog.connect(Config.graylog);
 
 function getPage(criteria, number, perPage) {
+    console.log("get-page:begin")
     return new Promise((resolve, reject) => {
         if (criteria.from || criteria.to) {
+            console.log("get-page:search-absolute");
             api.searchAbsolute({
                 query: criteria.query,
                 from: criteria.from,
@@ -74,6 +76,7 @@ function getPage(criteria, number, perPage) {
                 offset: number * perPage,
                 sort: 'timestamp:desc'
             }, (err, data) => {
+                console.log("get-page:search-absolute" , err, data);
                 if (err != null) {
                     reject(err);
                 }
@@ -83,6 +86,7 @@ function getPage(criteria, number, perPage) {
             });
         }
         else {
+            console.log("get-page:search-relative");
             api.searchRelative({
                 query: criteria.query,
                 range: criteria.range,
@@ -90,6 +94,7 @@ function getPage(criteria, number, perPage) {
                 offset: number * perPage,
                 sort: 'timestamp:desc'
             }, (err, data) => {
+                console.log("get-page:search-relative", err, data);
                 if (err != null) {
                     reject(err);
                 }
@@ -147,7 +152,8 @@ app.get("/logs-viewer/logs.json", function(req, res) {
         to
     });
 
-    console.log(criteria);
+    console.log('querying', criteria);
+    console.log("querying:gl", Config.graylog);
 
     getPage(criteria, 0, 1000).then(page => {
         res.end(JSON.stringify(page));
