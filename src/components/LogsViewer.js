@@ -67,7 +67,18 @@ const EnvoyFIelds = [
     'response_duration',
 ]
 const JavaFields = ['java_thread_name', 'sequence', 'java_pid', 'java_level', 'java_thread_id']
-const DockerFields = ['image_id', 'image_name', 'container_id', 'container_name', 'command', 'created']
+const DockerFields = ['image_id', 'image_name', 'container_id', 'container_name', 'command', 'created',
+    "container_labels_com_docker_compose_project_working_dir",
+    "container_image_name",
+    "container_labels_com_docker_compose_container-number",
+    "container_labels_com_docker_compose_project",
+    "container_labels_com_docker_compose_project_config_files",
+    "container_labels_com_docker_compose_config-hash",
+    "container_labels_com_docker_compose_service",
+    "container_labels_com_docker_compose_version",
+    "stream",
+    "container_labels_com_docker_compose_oneoff"
+]
 const VisibleFields = [
     'source',
     'source_host',
