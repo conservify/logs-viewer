@@ -67,17 +67,23 @@ const EnvoyFIelds = [
     'response_duration',
 ]
 const JavaFields = ['java_thread_name', 'sequence', 'java_pid', 'java_level', 'java_thread_id']
-const DockerFields = ['image_id', 'image_name', 'container_id', 'container_name', 'command', 'created',
-    "container_labels_com_docker_compose_project_working_dir",
-    "container_image_name",
-    "container_labels_com_docker_compose_container-number",
-    "container_labels_com_docker_compose_project",
-    "container_labels_com_docker_compose_project_config_files",
-    "container_labels_com_docker_compose_config-hash",
-    "container_labels_com_docker_compose_service",
-    "container_labels_com_docker_compose_version",
-    "stream",
-    "container_labels_com_docker_compose_oneoff"
+const DockerFields = [
+    'image_id',
+    'image_name',
+    'container_id',
+    'container_name',
+    'command',
+    'created',
+    'container_labels_com_docker_compose_project_working_dir',
+    'container_image_name',
+    'container_labels_com_docker_compose_container-number',
+    'container_labels_com_docker_compose_project',
+    'container_labels_com_docker_compose_project_config_files',
+    'container_labels_com_docker_compose_config-hash',
+    'container_labels_com_docker_compose_service',
+    'container_labels_com_docker_compose_version',
+    'stream',
+    'container_labels_com_docker_compose_oneoff',
 ]
 const VisibleFields = [
     'source',
@@ -104,7 +110,7 @@ const OtherExcludedFields = [
     'ts_converted',
     'envoy_time',
     'raw',
-    'rule_zap_json'
+    'rule_zap_json',
 ]
 const ExcludingFields = [
     ...GraylogFields,
@@ -144,7 +150,7 @@ class LogEntry extends React.Component {
 
         return _(entry.message)
             .keys()
-            .filter((key) => {
+            .filter(key => {
                 return !_.includes(ExcludingFields, key) && !_.includes(extraExcludedFields, key)
             })
             .value()
@@ -154,8 +160,8 @@ class LogEntry extends React.Component {
         const visibleFields = this.getVisibleFields(entry, extraExcludedFields, extraIncludedFields)
 
         const visibleData = _(visibleFields)
-            .filter((key) => entry.message[key])
-            .map((key) => {
+            .filter(key => entry.message[key])
+            .map(key => {
                 return {
                     key: key,
                     value: entry.message[key],
@@ -214,21 +220,21 @@ class LogEntry extends React.Component {
         const extras = this.getExtras(entry, extraExcludedFields, extraIncludedFields)
         const clickUrl = this.getEntryUrl(entry)
         const source_host = cleanup_source_host(entry.message['source_host'])
-        const source = [entry.message['source'], source_host].filter((v) => v).join(', ')
+        const source = [entry.message['source'], source_host].filter(v => v).join(', ')
 
         const level = ['zaplevel', 'levels']
-            .map((key) => entry.message[key])
-            .filter((v) => v)
+            .map(key => entry.message[key])
+            .filter(v => v)
             .join(', ')
 
         const detail = ['program', 'application_name', 'logger']
-            .map((key) => entry.message[key])
-            .filter((v) => v)
+            .map(key => entry.message[key])
+            .filter(v => v)
             .join(', ')
 
         return (
             <div>
-                <div className={allClasses} onClick={(e) => onFocus(entry)}>
+                <div className={allClasses} onClick={e => onFocus(entry)}>
                     <div className="col-md-1 ts">
                         {' '}
                         <a target="_blank" href={clickUrl}>
@@ -293,12 +299,12 @@ export default class LogsViewer extends React.Component {
 
         return (
             <div className="container-fluid logs">
-                {logs.messages.map((e) => (
+                {logs.messages.map(e => (
                     <LogEntry
                         key={e.message._id}
                         entry={e}
                         focusedTask={focusedTask}
-                        onFocus={(entry) => this.onFocus(entry)}
+                        onFocus={entry => this.onFocus(entry)}
                         extraExcludedFields={extraExcludedFields}
                         extraIncludedFields={extraIncludedFields}
                     />
