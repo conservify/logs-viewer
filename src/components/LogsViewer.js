@@ -128,7 +128,7 @@ const ClickableFields = ['device_id', 'queue', 'source_id', 'handler', 'message_
 
 class LogEntry extends React.Component {
     getUrl(query) {
-        return '/logs-viewer?range=864000&query=' + encodeURIComponent(query)
+        return '/logs-viewer/?range=864000&query=' + encodeURIComponent(query)
     }
 
     getEntryUrl(entry) {
