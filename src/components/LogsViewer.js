@@ -121,7 +121,7 @@ const OtherExcludedFields = [
     'ts_converted',
     'envoy_time',
     'raw',
-    'rule_zap_json',
+    'rule_flatten_json_message',
 ]
 const ExcludingFields = [
     ...GraylogFields,
